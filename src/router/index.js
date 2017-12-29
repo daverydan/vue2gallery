@@ -7,6 +7,7 @@ import Admin from '@/components/Admin'
 import AdminUserList from '@/components/AdminUserList'
 import AdminImageList from '@/components/AdminImageList'
 import AdminDashboard from '@/components/AdminDashboard'
+import AdminImageCreate from '@/components/AdminImageCreate'
 
 Vue.use(Router)
 
@@ -43,6 +44,9 @@ export default new Router({
         }, {
           path: 'images',
           component: AdminImageList
+        }, {
+          path: 'images/create',
+          component: AdminImageCreate
         }
       ]
     }
