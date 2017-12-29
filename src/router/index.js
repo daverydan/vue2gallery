@@ -3,7 +3,10 @@ import Router from 'vue-router'
 import Gallery from '@/components/Gallery'
 import About from '@/components/About'
 import Contact from '@/components/Contact'
-// import HelloWorld from '@/components/HelloWorld'
+import Admin from '@/components/Admin'
+import AdminUserList from '@/components/AdminUserList'
+import AdminImageList from '@/components/AdminImageList'
+import AdminDashboard from '@/components/AdminDashboard'
 
 Vue.use(Router)
 
@@ -11,6 +14,10 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      name: 'Home',
+      redirect: '/gallery'
+    }, {
       path: '/gallery',
       name: 'Gallery',
       component: Gallery
@@ -24,9 +31,20 @@ export default new Router({
       name: 'Contact',
       component: Contact
     }, {
-      path: '/',
-      name: 'Home',
-      redirect: '/gallery'
+      path: '/admin',
+      component: Admin,
+      children: [
+        {
+          path: '/',
+          component: AdminDashboard
+        }, {
+          path: 'users',
+          component: AdminUserList
+        }, {
+          path: 'images',
+          component: AdminImageList
+        }
+      ]
     }
   ]
 })
