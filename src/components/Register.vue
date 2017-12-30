@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import auth from '../services/auth'
 
   export default {
     name: 'register',
@@ -82,32 +82,10 @@
       validateForm () {
         this.$validator.validateAll().then(result => {
           if (result) {
-            this.signup()
+            auth.signup(this, this.user)
           }
         })
-      }, // validateForm
-
-      signup () {
-        axios.post('http://vuejsbook.app/api/v1/register', this.user)
-          .then(response => {
-            console.log(response.data)
-            if (response.data.user) {
-              console.log('A new user has been created')
-              this.status = 'success'
-              this.message = response.data.message
-              setTimeout(() => { // timed redirect
-                this.$router.push('/login')
-              }, 1500)
-            } else {
-              this.status = 'error'
-              this.errors = response.data.errors
-            }
-          })
-          .catch(e => {
-            this.status = 'error'
-            this.errors.push(e)
-          })
-      } // signup
+      } // validateForm
     } // methods
   }
 </script>

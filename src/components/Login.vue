@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import auth from '../services/auth'
 
   export default {
     name: 'login',
@@ -65,27 +65,10 @@
       validateForm () {
         this.$validator.validateAll().then(result => {
           if (result) {
-            this.signin()
+            auth.signin(this, this.user) // context
           }
         })
-      }, // validateForm
-
-      signin () {
-        axios.post('http://vuejsbook.app/api/v1/login', this.user)
-          .then(response => {
-            if (response.data.token) {
-              console.log(response.data)
-              this.$router.push('/admin')
-            } else {
-              this.status = 'error'
-              this.errors = response.data
-            }
-          })
-          .catch(e => {
-            this.status = 'error'
-            this.errors.push(e)
-          })
-      } // signin
+      } // validateForm
     }// methods
   }
 </script>
