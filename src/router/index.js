@@ -4,6 +4,7 @@ import Gallery from '@/components/Gallery'
 import About from '@/components/About'
 import Contact from '@/components/Contact'
 import Register from '@/components/Register'
+import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import AdminUserList from '@/components/AdminUserList'
 import AdminImageList from '@/components/AdminImageList'
@@ -25,6 +26,10 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    }, {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }, {
       path: '/gallery',
       name: 'Gallery',

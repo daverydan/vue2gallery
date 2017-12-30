@@ -23,8 +23,8 @@
             ria-expanded="false">Member
             <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Register</a></li>
-              <li><a href="#">Login</a></li>
+              <li><router-link to="/register">Register</router-link></li>
+              <li><router-link to="/login">Login</router-link></li>
             </ul>
           </li>
         </ul>
