@@ -1,15 +1,16 @@
 <template>
-  <div class="adminimagecreate">
+  <div class="adminimageedit">
     <div class="col-md-10 col-md-offset-1">
       <div>
         <router-link to="/admin" class="btn btn-default"> Back</router-link>
       </div>
     </div>
+
     <div class="col-md-10 col-md-offset-1">
       <div class="well well bs-component">
         <form class="form-horizontal" @submit.prevent="validateForm">
           <fieldset>
-            <legend>Add a new image: {{ image.title }}</legend>
+            <legend>Edit image: {{ image.title }}</legend>
             <div class="form-group">
               <label for="thumbnail" class="col-lg-2 control-label">Thumbnail</label>
               <div class="col-lg-10">
@@ -17,6 +18,7 @@
                 <span v-show="ferrors.has('thumbnail')" class="text-danger">{{ ferrors.first('thumbnail') }}</span>
               </div>
             </div>
+
             <div class="form-group">
               <label for="imagelink" class="col-lg-2 control-label">Image Link</label>
               <div class="col-lg-10">
@@ -24,6 +26,7 @@
                 <span v-show="ferrors.has('imageLink')" class="text-danger">{{ ferrors.first('imageLink') }}</span>
               </div>
             </div>
+
             <div class="form-group">
               <label for="title" class="col-lg-2 control-label">Title</label>
               <div class="col-lg-10">
@@ -31,6 +34,7 @@
                 <span v-show="ferrors.has('title')" class="text-danger">{{ ferrors.first('title') }}</span>
               </div>
             </div>
+
             <div class="form-group">
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
@@ -38,10 +42,11 @@
                 <span v-show="ferrors.has('description')" class="text-danger">{{ ferrors.first('description') }}</span>
               </div>
             </div>
+
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <router-link to="/admin" class="btn btn-default">Cancel</router-link>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <router-link to="/admin/images" class="btn btn-default">Cancel</router-link>
+                <button type="submit" class="btn btn-primary">Update</button>
               </div>
             </div>
           </fieldset>
@@ -55,31 +60,41 @@
   import axios from 'axios'
 
   export default {
-    name: 'adminimagecreate',
+    name: 'adminimageedit',
 
     data () {
       return {
         errors: [],
-        image: {
-          thumbnail: '',
-          imageLink: '',
-          title: '',
-          description: ''
-        }
+        image: []
       }
     }, // data
 
+    created () {
+      this.getImage(this.$route.params.id)
+    }, // created
+
     methods: {
       validateForm () {
-        this.$validator.validateAll().then((result) => {
+        this.$validator.validateAll().then(result => {
           if (result) {
-            this.createImage()
+            this.updateImage()
           }
         })
       }, // validateForm
 
-      createImage () {
-        axios.post('http://vuejsbook.app/api/v1/images', this.image)
+      getImage (id) {
+        axios.get('http://vuejsbook.app/api/v1/images/' + id)
+          .then(response => {
+            this.image = response.data
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      }, // getImage
+
+      updateImage: function () {
+        const url = 'http://vuejsbook.app/api/v1/images/' + this.$route.params.id
+        axios.put(url, this.image)
           .then(response => {
             console.log(response.data)
             this.$router.push('/admin/images') // redirect
@@ -87,7 +102,7 @@
           .catch(e => {
             this.errors.push(e)
           })
-      } // createImage
+      } // updateImage
     } // methods
   }
 </script>

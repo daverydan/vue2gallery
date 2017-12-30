@@ -22,8 +22,8 @@
               <td><img :src="image.thumbnail" width="200"/></td>
               <td>{{image.title}} </td>
               <td>
-                <router-link to="/images/edit" class="btn btn-info"> Edit</router-link>
-                <router-link to="/images/delete" class="btn btn-danger"> Delete</router-link>
+                <router-link :to="{ name: 'editimages', params: { id: image.id }}" class="btn btn-info"> Edit</router-link>
+                <router-link :to="{ name: 'deleteimages', params: { id: image.id }}" class="btn btn-danger"> Delete</router-link>
               </td>
             </tr>
           </tbody>
