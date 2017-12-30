@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Gallery from '@/components/Gallery'
 import About from '@/components/About'
 import Contact from '@/components/Contact'
+import Register from '@/components/Register'
 import Admin from '@/components/Admin'
 import AdminUserList from '@/components/AdminUserList'
 import AdminImageList from '@/components/AdminImageList'
@@ -20,6 +21,10 @@ export default new Router({
       path: '/',
       name: 'Home',
       redirect: '/gallery'
+    }, {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }, {
       path: '/gallery',
       name: 'Gallery',
