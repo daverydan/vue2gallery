@@ -1,14 +1,7 @@
 import axios from 'axios'
+import decode from 'jwt-decode'
 
 export default {
-  // data () {
-  //   return {
-  //     errors: [],
-  //     status: '',
-  //     message: ''
-  //   }
-  // }, // data
-
   signup (context, user) {
     axios.post('http://vuejsbook.app/api/v1/register', user)
       .then(response => {
@@ -35,7 +28,10 @@ export default {
     axios.post('http://vuejsbook.app/api/v1/login', user)
       .then(response => {
         if (response.data.token) {
+          localStorage.setItem('token', response.data.token)
+          localStorage.token = response.data.token
           console.log(response.data.token)
+          // authUser = response.data.token
           context.$router.push('/admin')
         } else {
           context.status = 'error'
@@ -46,5 +42,42 @@ export default {
         context.status = 'error'
         context.errors.push(e)
       })
-  } // signin
+  }, // signin
+
+  logout () {
+    localStorage.removeItem('token')
+    localStorage.token = ''
+  }
+}
+
+export function auth (to, from, next) {
+  if (!loggedIn()) {
+    next({
+      path: '/login'
+    })
+  } else {
+    next()
+  }
+}
+
+export function loggedIn () {
+  let token = getToken()
+  return !!token && !tokenNotExpired(token)
+}
+
+export function getToken () {
+  return localStorage.getItem('token')
+}
+
+export function tokenExpirationDate (encodedToken) {
+  let token = decode(encodedToken)
+  if (!token.exp) { return null }
+  const date = new Date(0)
+  date.setUTCSeconds(token.exp)
+  return date
+}
+
+export function tokenNotExpired (token) {
+  let expirationDate = tokenExpirationDate(token)
+  return expirationDate < new Date()
 }

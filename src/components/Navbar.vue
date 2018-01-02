@@ -20,11 +20,12 @@
           <li><router-link to="/contact">Contact</router-link></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" a
-            ria-expanded="false">Member
+            ria-expanded="false">Admin
             <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><router-link to="/register">Register</router-link></li>
               <li><router-link to="/login">Login</router-link></li>
+              <li><router-link to="/logout">Logout</router-link></li>
             </ul>
           </li>
         </ul>
@@ -34,11 +35,13 @@
 </template>
 
 <script>
+  // import { loggedIn } from '../services/auth'
+
   export default {
     data () {
       return {
         brand: 'Vue.js Book'
       }
-    }
+    } // data
   }
 </script>

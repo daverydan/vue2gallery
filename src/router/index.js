@@ -5,6 +5,7 @@ import About from '@/components/About'
 import Contact from '@/components/Contact'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
+import Logout from '@/components/Logout'
 import Admin from '@/components/Admin'
 import AdminUserList from '@/components/AdminUserList'
 import AdminImageList from '@/components/AdminImageList'
@@ -12,6 +13,7 @@ import AdminDashboard from '@/components/AdminDashboard'
 import AdminImageCreate from '@/components/AdminImageCreate'
 import AdminImageEdit from '@/components/AdminImageEdit'
 import AdminImageDelete from '@/components/AdminImageDelete'
+import { auth } from '../services/auth'
 
 Vue.use(Router)
 
@@ -31,6 +33,10 @@ export default new Router({
       name: 'Login',
       component: Login
     }, {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout
+    }, {
       path: '/gallery',
       name: 'Gallery',
       component: Gallery
@@ -45,6 +51,7 @@ export default new Router({
       component: Contact
     }, {
       path: '/admin',
+      beforeEnter: auth,
       component: Admin,
       children: [
         {
