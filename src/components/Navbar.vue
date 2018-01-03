@@ -23,9 +23,9 @@
             ria-expanded="false">Admin
             <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><router-link to="/register">Register</router-link></li>
-              <li><router-link to="/login">Login</router-link></li>
-              <li><router-link to="/logout">Logout</router-link></li>
+              <li><router-link v-show="!isLoggedIn" to="/login">Login</router-link></li>
+              <li><router-link v-show="isLoggedIn" to="/register">Register</router-link></li>
+              <li><router-link v-show="isLoggedIn" to="/logout">Logout</router-link></li>
             </ul>
           </li>
         </ul>
@@ -35,13 +35,24 @@
 </template>
 
 <script>
-  // import { loggedIn } from '../services/auth'
+  import { loggedIn } from '../services/auth'
+  import { EventBus } from '../services/event-bus'
 
   export default {
     data () {
       return {
-        brand: 'Vue.js Book'
+        brand: 'Vue.js Book',
+        isLoggedIn: loggedIn()
       }
-    } // data
+    }, // data
+
+    created () {
+      EventBus.$on('login', () => {
+        this.isLoggedIn = loggedIn()
+      })
+      EventBus.$on('logout', () => {
+        this.isLoggedIn = loggedIn()
+      })
+    } // created
   }
 </script>

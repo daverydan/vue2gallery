@@ -58,6 +58,7 @@
 
 <script>
   import axios from 'axios'
+  import { getAuthHeader } from '../services/auth'
 
   export default {
     name: 'adminimageedit',
@@ -93,8 +94,9 @@
       }, // getImage
 
       updateImage: function () {
+        var config = { headers: getAuthHeader() }
         const url = 'http://vuejsbook.app/api/v1/images/' + this.$route.params.id
-        axios.put(url, this.image)
+        axios.put(url, this.image, config)
           .then(response => {
             console.log(response.data)
             this.$router.push('/admin/images') // redirect

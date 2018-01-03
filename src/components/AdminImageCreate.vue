@@ -53,6 +53,7 @@
 
 <script>
   import axios from 'axios'
+  import { getAuthHeader } from '../services/auth'
 
   export default {
     name: 'adminimagecreate',
@@ -79,7 +80,8 @@
       }, // validateForm
 
       createImage () {
-        axios.post('http://vuejsbook.app/api/v1/images', this.image)
+        var config = { headers: getAuthHeader() }
+        axios.post('http://vuejsbook.app/api/v1/images', this.image, config)
           .then(response => {
             console.log(response.data)
             this.$router.push('/admin/images') // redirect

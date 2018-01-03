@@ -1,5 +1,6 @@
 import axios from 'axios'
 import decode from 'jwt-decode'
+import { EventBus } from './event-bus'
 
 export default {
   signup (context, user) {
@@ -30,9 +31,9 @@ export default {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token)
           localStorage.token = response.data.token
-          console.log(response.data.token)
-          // authUser = response.data.token
-          context.$router.push('/admin')
+          // console.log(response.data.token)
+          EventBus.$emit('login', 'logged in')
+          context.$router.push('/admin') // redirect
         } else {
           context.status = 'error'
           context.errors = response.data
@@ -46,7 +47,13 @@ export default {
 
   logout () {
     localStorage.removeItem('token')
-    localStorage.token = ''
+    EventBus.$emit('logout', 'logged out')
+  }
+}
+
+export function getAuthHeader () {
+  return {
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
   }
 }
 

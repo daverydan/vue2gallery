@@ -35,6 +35,7 @@
 
 <script>
   import axios from 'axios'
+  import { getAuthHeader } from '../services/auth'
 
   export default {
     name: 'adminimagelist',
@@ -47,7 +48,8 @@
     }, // data
 
     created () {
-      axios.get('http://vuejsbook.app/api/v1/images')
+      var config = { headers: getAuthHeader() }
+      axios.get('http://vuejsbook.app/api/v1/images', config)
         .then(response => {
           this.images = response.data
         })

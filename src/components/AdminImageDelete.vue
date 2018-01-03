@@ -26,6 +26,7 @@
 
 <script>
   import axios from 'axios'
+  import { getAuthHeader } from '../services/auth'
 
   export default {
     name: 'adminimagedelete',
@@ -45,7 +46,7 @@
       getImage: function (id) {
         axios.get('http://vuejsbook.app/api/v1/images/' + id)
           .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             this.image = response.data
           })
           .catch(e => {
@@ -54,10 +55,11 @@
       }, // getImage
 
       deleteImage: function () {
+        var config = { headers: getAuthHeader() }
         const url = 'http://vuejsbook.app/api/v1/images/' + this.$route.params.id
-        axios.delete(url)
+        axios.delete(url, config)
           .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             this.$router.push('/admin/images') // redirect
           })
           .catch(e => {
